@@ -42,6 +42,10 @@ namespace Sitecore.Support.Cintel.Reporting.Processors
             else
                 data = Service.GetReport(new EventsReportServiceParameters(contactId));
 
+            #region Fix issue # 202620
+            data.RemoveAll(x => (x.RelatedEvent != null && x.RelatedEvent.DefinitionId == Sitecore.XConnect.Collection.Model.PageViewEvent.EventDefinitionId));
+            #endregion
+
             args.ResultTableForView = Mapper.Map(data);
         }
     }
